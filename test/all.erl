@@ -28,6 +28,7 @@ start()->
     io:format("Start ~p~n",[{?MODULE,?FUNCTION_NAME,?LINE}]),
     
     ok=setup(),
+    ok=py_test(),
 %    ok=normal_test(),
  
  
@@ -42,27 +43,22 @@ start()->
 %% 
 %% @end
 %%--------------------------------------------------------------------
+py_test()->
+    io:format("Start ~p~n",[{?MODULE,?FUNCTION_NAME,?LINE}]),
+    {ok,P}=python:start([{python,"python3"}]),
+    python:call(P,xx,main,[]),
+    44=2+python:call(P,xx,add,[20,22]),
+    
+    ok.
+    
+%%--------------------------------------------------------------------
+%% @doc
+%% 
+%% @end
+%%--------------------------------------------------------------------
 normal_test()->
     io:format("Start ~p~n",[{?MODULE,?FUNCTION_NAME,?LINE}]),
 
-    io:format("mnesia system_info ~p~n",[{mnesia:system_info(),?MODULE,?FUNCTION_NAME,?LINE}]),
-    ok=kvs:create(key1,value1),
-    {ok,[{key1,value1}]}=kvs:get_all(),
-    {ok,value1}=kvs:read(key1),
-    {error,["Doesnt exists Key ",glurk,lib_kvs,_]}=kvs:read(glurk),
-    
-    ok=kvs:update(key1,value11),
-    {ok,value11}=kvs:read(key1),
-    {error,["Doesn't exists",glurk,lib_kvs,_]}=kvs:update(glurk,value11),
-    
-    ok=kvs:delete(key1),
-    {error,["Doesnt exists Key ",key1,lib_kvs,_]}=kvs:read(key1),
-    {error,["Doesn't exists",glurk,lib_kvs,_]}=kvs:delete(glurk),
-    
-  
-    ok=kvs:create(key1,value10),
-    ok=kvs:create(key2,value20),
-   {ok,[{key2,value20},{key1,value10}]}=kvs:get_all(),
 
     ok.
     

@@ -131,11 +131,13 @@ eunit:
 	#INFO: Compile application
 	mkdir ebin;		
 	rebar3 compile;	
-	cp _build/default/lib/*/ebin/* ebin;
+#	cp _build/default/lib/*/ebin/* ebin;
+#	cp _build/default/lib/*/priv/* priv;
 #	rm -rf _build*;
 	#INFO: Starts the eunit testing .................
 	erl -pa ebin -pa priv\
-	 -pa test_ebin\
+	 -pa test_ebin -pa py\
+	 -pa _build/default/lib/*/ebin\
 	 -sname proto_service_a\
 	 -run $(m) start\
 	 -setcookie a
