@@ -22,17 +22,16 @@ all:
 	#INFO: Deleting files and dirs created during execution/runtime 
 	rm -rf logs;
 	rm -rf *_a;
+	rm -rf __pycache__ proto_service_dir; 
 	#INFO: Compile application		
-	rebar3 compile;	
-	rm -rf _build*;
-	rebar3 edoc;
-#	git add *;
-#	git add -f *;
-#	git commit -m $(m);
-#	git push;
+	rm -rf release;
+	mkdir release;
+	rebar3 compile
+	rebar3 release;
+	rebar3 as prod tar;
+	cp _build/prod/rel/proto_service/proto_service-0.1.0.tar.gz release/proto_service.tar.gz;
 	rm -rf _build*;
 	git status
-	#INFO: no_ebin_commit ENDED SUCCESSFUL
 	echo Ok there you go!
 build:
 	#INFO: with_ebin_commit STARTED
@@ -115,25 +114,17 @@ eunit:
 	#rm test/dependent_apps.erl;
 	#cp /home/joq62/erlang/dev_support/dependent_apps.erl test;
 	erlc -I include -I /home/joq62/erlang/include -o test_ebin test/*.erl;
-	erlc -I include\
-	 -I /home/joq62/erlang/include\
-	 -I ../../log_service/include\
-	 -o test_ebin ../../log_service/src/*.erl;
-	erlc -I include\
-	 -I /home/joq62/erlang/include\
-	 -I ../../rd_service/include\
-	 -o test_ebin ../../rd_service/src/*.erl;
-	erlc -I include\
-	 -I /home/joq62/erlang/include\
-	 -I ../../log2_service/include\
-	 -o test_ebin ../../log2_service/src/*.erl;
 	#INFO: Creating Common applications needed for testing
 	#INFO: Compile application
-	mkdir ebin;		
-	rebar3 compile;	
-#	cp _build/default/lib/*/ebin/* ebin;
-#	cp _build/default/lib/*/priv/* priv;
-#	rm -rf _build*;
+	rm -rf release;
+	mkdir release;
+	rebar3 compile
+	rebar3 release;
+	rebar3 as prod tar;
+	cp _build/prod/rel/proto_service/proto_service-0.1.0.tar.gz release/proto_service.tar.gz;
+	rm -rf _build*;
+	git status
+	echo Ok there you go!
 	#INFO: Starts the eunit testing .................
 	erl -pa ebin -pa priv\
 	 -pa test_ebin -pa py\

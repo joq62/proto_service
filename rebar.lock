@@ -1,4 +1,12 @@
 [{<<"erlport">>,
   {git,"https://github.com/erlport/erlport.git",
        {ref,"d01e1dcd4bd4332aedf5821f5ca875848031fe94"}},
+  0},
+ {<<"log">>,
+  {git,"https://github.com/joq62/log.git",
+       {ref,"ade24430cf4ca8eab3aa83b94ee7f5f02890ad77"}},
+  0},
+ {<<"rd">>,
+  {git,"https://github.com/joq62/rd.git",
+       {ref,"69ad5fa3655aeb8830de7ba05bbf2b6461564784"}},
   0}].
