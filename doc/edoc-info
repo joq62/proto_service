@@ -1,3 +1,0 @@
-%% encoding: UTF-8
-{application,proto_service}.
-{modules,[proto,py]}.
